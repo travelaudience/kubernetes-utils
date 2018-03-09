@@ -25,6 +25,7 @@ gcloud container node-pools list --cluster [CLUSTER_NAME]
 gcloud container clusters update [CLUSTER_NAME] --no-enable-autoscaling --node-pool [POOL_NAME]
 ```
 * If the new nodes should be tainted, apply the taints before proceeding
+> **TIP** check which taints exist: `kubectl get nodes -o yaml | grep taint -A 4`
 * run the script `./drain-nodes.sh -h`
 * use terraform to delete the old node
 * drain the default node pool and upgrade it to the same version as the master node.

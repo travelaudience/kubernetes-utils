@@ -24,6 +24,7 @@ gcloud container node-pools list --cluster [CLUSTER_NAME]
 # turn OFF autoscaling for a particular node pool
 gcloud container clusters update [CLUSTER_NAME] --no-enable-autoscaling --node-pool [POOL_NAME]
 ```
+* If the new nodes should be tainted, apply the taints before proceeding
 * run the script `./drain-nodes.sh -h`
 * use terraform to delete the old node
 * drain the default node pool and upgrade it to the same version as the master node.

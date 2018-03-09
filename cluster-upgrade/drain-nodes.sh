@@ -205,7 +205,7 @@ done
 
 for n in "${NODES[@]}" ; do
     c_echo "Draining $n..." "cyan"
-    # drain_node $n ""
+    drain_node $n ""
     wait_for_pods_to_migrate
     c_echo ""
     echo -n "Are you ready for the next node... [ENTER]"

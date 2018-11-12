@@ -124,7 +124,17 @@ function drain_node() {
     c_echo ""
     c_echo " $ kubectl drain --ignore-daemonsets --force $2 $1"
     # TODO: an area for improvment is to have a synchronous output to the user
-    if ! output=$(kubectl drain --ignore-daemonsets --force $2 $1); then
+    output=$((kubectl drain --ignore-daemonsets --force $2 $1) 2>&1)
+    if [[ "$output" =~ "Unknown controller kind" ]] ; then
+        c_echo "$output"
+        echo ""
+        c_echo "The pod without a controller needs to be deleted manually." "yellow"
+        echo -n "Once the pod is deleted, continue this script again clicking [ENTER] or ('s' to skip this node): "
+        read skip
+        if [ "$skip" != "s" ] ; then
+            drain_node $1 "$2"
+        fi
+    elif [[ "$output" =~ "unable to drain node" ]] ; then
         c_echo "$output" "yellow"
         echo ""
         echo -n "Re-run 'drain' with additional flags (use 'c' to continue without re-running): "

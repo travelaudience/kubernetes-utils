@@ -15,7 +15,7 @@ function output_help {
     echo "  -n  --name     the name of the node pool that will be drained ";
     echo "                    (preferably with the unique id to distinguish it";
     echo "                     from the new node pool)";
-    echo "  -c  --count    minimal count of pods that should be running (default 2)";
+    echo "  -c  --count    count of non-running pods (completed/error) in the cluster before starting draining process (default 2)";
     echo "      --dry-run  only output the current resource usage of the nodes";
     echo "      --no-color remove the additional color from the output";
 }

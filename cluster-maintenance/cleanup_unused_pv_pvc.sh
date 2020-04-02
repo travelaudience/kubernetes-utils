@@ -27,7 +27,6 @@ done
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-
 if [ ${#claims_to_delete[@]} -eq 0 ]
 then
     echo "No PersistentVolumeClaim to delete"
@@ -36,7 +35,7 @@ else
     for c in "${claims_to_delete[@]}"; do printf "${RED}$c${NC}\n"; done
     echo -n "Are you sure you want to clean this claims... [ENTER]"
     read ready
-    #kubectl -n $NAMESPACE delete pvc ${claims_to_delete[*]}	
+    kubectl -n $NAMESPACE delete pvc ${claims_to_delete[*]}	
 fi
 
 pv_to_delete=($(kubectl -n $NAMESPACE get pv | tail -n +2 | grep -v Bound | awk '{print $1}'))
@@ -48,5 +47,5 @@ else
     for c in "${pv_to_delete[@]}"; do printf "${RED}$c${NC}\n"; done
     echo -n "Are you sure you want to clean this pvs... [ENTER]"
     read ready
-    #kubectl -n $NAMESPACE delete pv ${pv_to_delete[*]}
+    kubectl -n $NAMESPACE delete pv ${pv_to_delete[*]}
 fi

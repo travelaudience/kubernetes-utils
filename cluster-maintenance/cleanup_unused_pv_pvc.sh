@@ -21,19 +21,7 @@ all_claims=$(kubectl get pvc -n $NAMESPACE | tail -n +2 | awk '{print $1}')
 claims_to_delete=()
 for claim in $all_claims
 do
-    to_delete=true
-    for claim_in_use in $claims_in_use
-    do
-    	if [[ "\""$claim"\"" == $claim_in_use ]]
-        then
-            to_delete=false
-        fi 
-    done
-
-    if $to_delete
-    then
-    	claims_to_delete+=($claim)
-    fi 
+    [[ $all_claims =~ (^|[[:space:]])"$claim"($|[[:space:]]) ]] && printf "" || claims_to_delete+=($claim)
 done
 
 RED='\033[0;31m'
@@ -48,7 +36,7 @@ else
     for c in "${claims_to_delete[@]}"; do printf "${RED}$c${NC}\n"; done
     echo -n "Are you sure you want to clean this claims... [ENTER]"
     read ready
-    kubectl -n $NAMESPACE delete pvc ${claims_to_delete[*]}	
+    #kubectl -n $NAMESPACE delete pvc ${claims_to_delete[*]}	
 fi
 
 pv_to_delete=($(kubectl -n $NAMESPACE get pv | tail -n +2 | grep -v Bound | awk '{print $1}'))
@@ -60,5 +48,5 @@ else
     for c in "${pv_to_delete[@]}"; do printf "${RED}$c${NC}\n"; done
     echo -n "Are you sure you want to clean this pvs... [ENTER]"
     read ready
-    kubectl -n $NAMESPACE delete pv ${pv_to_delete[*]}
+    #kubectl -n $NAMESPACE delete pv ${pv_to_delete[*]}
 fi

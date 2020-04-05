@@ -5,3 +5,4 @@ at travelaudience we use [Terraform](https://www.terraform.io/) and [Google Clou
 This repo contains some of the tools that help make using this system easier, including:
 
 * [/cluster-upgrade](/cluster-upgrade)
+* [/cluster-maintenance](/cluster-maintenance)

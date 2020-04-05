@@ -33,7 +33,7 @@ then
 else
     printf "${RED}Going to delete the following claims:\n"
     for c in "${claims_to_delete[@]}"; do printf "${RED}$c${NC}\n"; done
-    echo -n "Are you sure you want to clean this claims... [ENTER]"
+    echo -n "Are you sure you want to clean these claims... [ENTER]"
     read ready
     kubectl -n $NAMESPACE delete pvc ${claims_to_delete[*]}	
 fi
@@ -45,7 +45,7 @@ then
 else
     printf "${RED}Going to clean up unbound PVs"
     for c in "${pv_to_delete[@]}"; do printf "${RED}$c${NC}\n"; done
-    echo -n "Are you sure you want to clean this pvs... [ENTER]"
+    echo -n "Are you sure you want to clean these pvs... [ENTER]"
     read ready
     kubectl -n $NAMESPACE delete pv ${pv_to_delete[*]}
 fi

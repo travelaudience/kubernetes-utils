@@ -21,7 +21,7 @@ all_claims=$(kubectl get pvc -n $NAMESPACE | tail -n +2 | awk '{print $1}')
 claims_to_delete=()
 for claim in $all_claims
 do
-    [[ $all_claims =~ (^|[[:space:]])"$claim"($|[[:space:]]) ]] && printf "" || claims_to_delete+=($claim)
+    [[ $claims_in_use =~ "$claim" ]] && printf "" || claims_to_delete+=($claim)
 done
 
 RED='\033[0;31m'

@@ -18,6 +18,8 @@ gcloud container clusters upgrade [CLUSTER_NAME] --master --cluster-version [CLU
 > **TIP** `gcloud beta container operations list` to see the actions running on the cluster
 * Using terraform, create new node pool with naming that matches the version you want to upgrade to. _(for example, if there is a `master-pool` running version `1.8.5`, and you're updating to `1.9.2`, create a new node pool named `master-pool-1-9`)_
 * If there is autoscaling on the existing node pools (the ones that will be removed), turn autoscaling `off`
+* **NOTE:** Cordoning all nodes in the nodepool. The current version of the script _does not_ cordon all nodes in the nodepool being migrated. This is done so we avoid problems with the GCP load balancer, which cuts traffic to cordoned nodes. Because of this, some pods will be migrated to nodes in the "old" nodepool, but eventually all pods will get to the "new" nodepool, once there is not enough capacity in the "old" nodepool.
+
 ```bash
 # list the node pools available in this cluster
 gcloud container node-pools list --cluster [CLUSTER_NAME]

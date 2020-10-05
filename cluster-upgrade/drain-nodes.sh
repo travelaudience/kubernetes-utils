@@ -208,10 +208,11 @@ read contunue
 # DRAIN NODES
 # ----------------
 
+# disabled - to avoid problems with GCP LB
 # mark each Node as unschedulable
-for n in "${NODES[@]}" ; do
-    c_echo "$(kubectl cordon $n)"
-done
+# for n in "${NODES[@]}" ; do
+#     c_echo "$(kubectl cordon $n)"
+# done
 
 for n in "${NODES[@]}" ; do
     c_echo "Draining $n..." "cyan"
